@@ -1,9 +1,13 @@
 package com.gozip.controller;
 
+import com.gozip.dto.SignupRequestDto;
+import com.gozip.entity.Member;
 import com.gozip.dto.LoginRequestDto;
 import com.gozip.dto.StateDto;
 import com.gozip.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,5 +29,18 @@ public class MemberController {
 
 
     // 회원가입 구현
+
+    // 회원가입 페이지
+    @GetMapping("/signin")
+    public ModelAndView signinPage() {
+        return new ModelAndView("signin");
+    }
+
+    // 회원가입 요청
+    @PostMapping("/signin")
+    public String signup(@RequestBody SignupRequestDto signupRequestDto) {
+
+        return memberService.signin(signupRequestDto);
+    }
 
 }

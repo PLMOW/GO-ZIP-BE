@@ -1,5 +1,8 @@
 package com.gozip.service;
 
+import com.gozip.dto.SignupRequestDto;
+import com.gozip.entity.Member;
+import com.gozip.repository.MemberRepository;
 import com.gozip.dto.LoginRequestDto;
 import com.gozip.dto.StateDto;
 import com.gozip.entity.Member;
@@ -12,11 +15,14 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
     private final JwtUtil jwtUtil;
     private final MemberRepository memberRepository;
+
 
     // 로그인 구현
     @Transactional
@@ -45,5 +51,34 @@ public class MemberService {
 
 
     // 회원가입 구현
+
+    public String signin(SignupRequestDto signupRequestDto) {
+
+        Long memberId = signupRequestDto.getMemberId();
+
+        String email = signupRequestDto.getEmail();
+
+        String password = signupRequestDto.getPassword();
+
+        // 회원 중복 여부 확인
+        Optional<Member> findEmail = memberRepository.findMemberByEmail(email);
+        if (findEmail.isPresent()) {
+            throw new IllegalArgumentException("이미 등록된 이메일 입니다.");
+        }
+
+        // 회원, 관리자(중개인) 확인
+        MemberRoleEnum role = MemberRoleEnum.MEMBER;
+        if(signupRequestDto.isAdmin()) {
+            if(signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
+                throw new IllegalArgumentException("관리자 토큰이 틀려 등록이 불가능 합니다.");
+            }
+            role = MemberRoleEnum.ADMIN;
+        }
+
+        Member member = new Member(memberId, email, password, role);
+        memberRepository.save(member);
+
+        return new StateDto("OK");
+    }
 
 }
