@@ -19,10 +19,11 @@ public class Member {
     private Long memberId;
     private String email;
     private String password;
+    private MemberRoleEnum role;
 
-    public Member(Long memberId, String email, String password) {
-        this.memberId = memberId;
+    public Member(String email, String password, MemberRoleEnum role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 }

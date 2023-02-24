@@ -2,6 +2,7 @@ package com.gozip.service;
 
 import com.gozip.dto.SignupRequestDto;
 import com.gozip.entity.Member;
+import com.gozip.entity.MemberRoleEnum;
 import com.gozip.repository.MemberRepository;
 import com.gozip.dto.LoginRequestDto;
 import com.gozip.dto.StateDto;
@@ -9,6 +10,7 @@ import com.gozip.entity.Member;
 import com.gozip.jwt.JwtUtil;
 import com.gozip.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -22,6 +24,10 @@ import java.util.Optional;
 public class MemberService {
     private final JwtUtil jwtUtil;
     private final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
 
     // 로그인 구현
@@ -43,7 +49,7 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         // 토큰 발급
-        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail()));
+        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
         // 상태 반환
         return new StateDto("OK");
     }
@@ -51,14 +57,12 @@ public class MemberService {
 
 
     // 회원가입 구현
-
-    public String signin(SignupRequestDto signupRequestDto) {
-
-        Long memberId = signupRequestDto.getMemberId();
+    @Transactional
+    public StateDto signin(SignupRequestDto signupRequestDto) {
 
         String email = signupRequestDto.getEmail();
+        String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
-        String password = signupRequestDto.getPassword();
 
         // 회원 중복 여부 확인
         Optional<Member> findEmail = memberRepository.findMemberByEmail(email);
@@ -75,7 +79,7 @@ public class MemberService {
             role = MemberRoleEnum.ADMIN;
         }
 
-        Member member = new Member(memberId, email, password, role);
+        Member member = new Member(email, password, role);
         memberRepository.save(member);
 
         return new StateDto("OK");

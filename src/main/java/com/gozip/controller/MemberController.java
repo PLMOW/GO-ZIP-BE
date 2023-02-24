@@ -6,6 +6,7 @@ import com.gozip.dto.LoginRequestDto;
 import com.gozip.dto.StateDto;
 import com.gozip.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+//@Controller
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class MemberController {
@@ -38,8 +40,8 @@ public class MemberController {
 
     // 회원가입 요청
     @PostMapping("/signin")
-    public String signup(@RequestBody SignupRequestDto signupRequestDto) {
-
+    public StateDto signup(@RequestBody SignupRequestDto signupRequestDto) {
+        System.out.println("컨트롤러 진입");
         return memberService.signin(signupRequestDto);
     }
 
