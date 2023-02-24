@@ -20,23 +20,17 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     // 로그인 구현. 일단 반환타입 Member로
     @PostMapping("/login")
     public StateDto login(@RequestBody LoginRequestDto request, HttpServletResponse response) {
         return memberService.login(request, response);
     }
 
-
-
-
-    // 회원가입 구현
-
 //     회원가입 페이지
-    @GetMapping("/signup")
-    public ModelAndView signupPage() {
-        return new ModelAndView("signup");
-    }
+//    @GetMapping("/signup")
+//    public ModelAndView signupPage() {
+//        return new ModelAndView("signin");
+//    }
 
     // 회원가입 요청
     @PostMapping("/signup")

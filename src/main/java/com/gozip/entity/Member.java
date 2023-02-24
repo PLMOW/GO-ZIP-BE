@@ -4,10 +4,7 @@ package com.gozip.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -19,6 +16,8 @@ public class Member {
     private Long memberId;
     private String email;
     private String password;
+
+    @Enumerated(value = EnumType.STRING)
     private MemberRoleEnum role;
 
     public Member(String email, String password, MemberRoleEnum role) {
