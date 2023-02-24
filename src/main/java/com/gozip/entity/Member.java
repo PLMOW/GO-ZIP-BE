@@ -1,4 +1,4 @@
-package com.gozip.member;
+package com.gozip.entity;
 
 
 import lombok.Getter;
