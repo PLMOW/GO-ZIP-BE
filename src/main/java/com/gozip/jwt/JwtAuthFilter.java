@@ -2,8 +2,10 @@ package com.gozip.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gozip.dto.SecurityExceptionDto;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +32,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (token != null){
             if (jwtUtil.validateToken(token)){
-
+                jwtExceptionHandler(response,"Token Error", HttpStatus.UNAUTHORIZED.value());
+                return;
             }
+            Claims info = jwtUtil.getUserInfoFromToken(token);
+            setAuthentication(info.getSubject());
         }
+        filterChain.doFilter(request,response);
     }
 
     public void setAuthentication(String email) {

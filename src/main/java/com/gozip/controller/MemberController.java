@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-@RestController
-//@Controller
+//@RestController
+@Controller
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class MemberController {
@@ -32,17 +32,17 @@ public class MemberController {
 
     // 회원가입 구현
 
-    // 회원가입 페이지
-    @GetMapping("/signin")
-    public ModelAndView signinPage() {
+//     회원가입 페이지
+    @GetMapping("/signup")
+    public ModelAndView signupPage() {
         return new ModelAndView("signin");
     }
 
     // 회원가입 요청
-    @PostMapping("/signin")
+    @PostMapping("/signup")
     public StateDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         System.out.println("컨트롤러 진입");
-        return memberService.signin(signupRequestDto);
+        return memberService.signup(signupRequestDto);
     }
 
 }

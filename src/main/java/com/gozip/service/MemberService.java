@@ -45,7 +45,7 @@ public class MemberService {
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         // 비밀번호 일치여부
-        if (!member.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         // 토큰 발급
@@ -58,7 +58,7 @@ public class MemberService {
 
     // 회원가입 구현
     @Transactional
-    public StateDto signin(SignupRequestDto signupRequestDto) {
+    public StateDto signup(SignupRequestDto signupRequestDto) {
 
         String email = signupRequestDto.getEmail();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
