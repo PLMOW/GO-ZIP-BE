@@ -6,9 +6,7 @@ import com.gozip.entity.MemberRoleEnum;
 import com.gozip.repository.MemberRepository;
 import com.gozip.dto.LoginRequestDto;
 import com.gozip.dto.StateDto;
-import com.gozip.entity.Member;
 import com.gozip.jwt.JwtUtil;
-import com.gozip.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,7 +29,7 @@ public class MemberService {
 
 
     // 로그인 구현
-    @Transactional
+    @Transactional(readOnly = true)
     public StateDto login(LoginRequestDto request, HttpServletResponse response) {
         // 유저 이메일, 비밀번호 가져오기
         String email = request.getEmail();
@@ -49,7 +47,7 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         // 토큰 발급
-        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
         // 상태 반환
         return new StateDto("OK");
     }
