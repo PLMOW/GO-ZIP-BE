@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
 
     private final MemberService memberService;

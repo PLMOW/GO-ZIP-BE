@@ -47,7 +47,7 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         // 토큰 발급
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
+        response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
         // 상태 반환
         return new StateDto("OK");
     }
