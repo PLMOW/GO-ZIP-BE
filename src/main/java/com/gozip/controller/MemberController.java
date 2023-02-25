@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://13.125.193.128:8080")
 public class MemberController {
 
     private final MemberService memberService;
@@ -35,8 +35,14 @@ public class MemberController {
 
     // 회원가입 요청
     @PostMapping("/signup")
+//    @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
     public StateDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         return memberService.signup(signupRequestDto);
     }
 
+    @GetMapping("/tryget")
+    public StateDto tryget(){
+        StateDto stateDto = new StateDto("200");
+        return stateDto;
+    }
 }
