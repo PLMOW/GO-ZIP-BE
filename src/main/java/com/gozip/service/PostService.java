@@ -5,6 +5,7 @@ import com.gozip.dto.PostResponseDto;
 import com.gozip.entity.Address;
 import com.gozip.entity.Member;
 import com.gozip.entity.Post;
+import com.gozip.exception.customException.InvalidDataException;
 import com.gozip.repository.MemberRepository;
 import com.gozip.repository.PostRepository;
 import com.gozip.security.MemberDetailsImpl;
@@ -25,7 +26,7 @@ public class PostService {
     public ResponseEntity<PostResponseDto> createPost(MemberDetailsImpl memberDetails, PostRequestDto postRequestDto) {
         // 사용자 찾아오기
         Member member = memberRepository.findMemberByEmail(memberDetails.getMember().getEmail()).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 아이디 입니다.")
+                () -> new InvalidDataException("존재하지 않는 아이디 입니다.")
         );
         // 주소 저장
         Address address = new Address(postRequestDto.getCity(), postRequestDto.getTown(), postRequestDto.getStreet());
