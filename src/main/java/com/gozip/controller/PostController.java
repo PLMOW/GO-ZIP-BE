@@ -7,10 +7,7 @@ import com.gozip.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -21,7 +18,13 @@ public class PostController {
 
     // 게시글 등록
     @PostMapping("/product")
-    public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails, @RequestBody PostRequestDto postRequestDto) {
-        return postService.createPost(memberDetails, postRequestDto);
+    public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails, @RequestBody PostRequestDto postDto) {
+        return postService.createPost(memberDetails, postDto);
+    }
+
+    // 게시글 선택 조회
+    @GetMapping("/product/{id}")
+    public PostRequestDto getPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails, @PathVariable Long id) {
+        return postService.getPost(memberDetails, id);
     }
 }
