@@ -20,7 +20,7 @@ public class PostController {
     private final PostService postService;
 
     // 게시글 등록
-    @PostMapping("/product/form")
+    @PostMapping("/product")
     public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails, @RequestBody PostRequestDto postRequestDto) {
         return postService.createPost(memberDetails, postRequestDto);
     }
