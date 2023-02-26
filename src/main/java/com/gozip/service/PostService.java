@@ -54,12 +54,15 @@ public class PostService {
     }
 
     // 선택 게시글 조회
+    @Transactional
     public PostRequestDto getPost(Long id) {
         // id로 post조회하기
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new InvalidDataException("게시글이 존재하지 않습니다.")
         );
+        // image 조회하기
+        List<Picture> pictures = pictureRepository.findPicturesByPostId(post.getId());
         // dto로 반환
-        return new PostRequestDto(post);
+        return new PostRequestDto(post, pictures);
     }
 }
