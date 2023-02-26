@@ -21,6 +21,7 @@ public class Post {
     private String description;
     @Column(name = "house_type")
     private String houseType;
+    private String img;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -36,6 +37,7 @@ public class Post {
         title = postRequestDto.getTitle();
         description = postRequestDto.getDescription();
         houseType = postRequestDto.getHouse_type();
+        img = postRequestDto.getImg();
         this.member = member;
         this.address = address;
     }

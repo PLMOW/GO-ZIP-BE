@@ -8,9 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,10 +18,8 @@ public class PostController {
 
     // 게시글 등록
     @PostMapping("/product")
-    public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails,
-                                                      @RequestPart (value = "data") PostRequestDto postDto,
-                                                      @RequestPart(value = "image") List<MultipartFile> pictures) {
-        return postService.createPost(memberDetails, postDto, pictures);
+    public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails, @RequestBody PostRequestDto postDto) {
+        return postService.createPost(memberDetails, postDto);
     }
 
     // 게시글 선택 조회

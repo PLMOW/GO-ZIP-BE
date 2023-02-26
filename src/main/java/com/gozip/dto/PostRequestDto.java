@@ -12,6 +12,7 @@ public class PostRequestDto {
     private String title;
     private String description;
     private String house_type;
+    private String img;
     private String city;
     private String town;
     private String street;
@@ -20,6 +21,7 @@ public class PostRequestDto {
         this.title = post.getTitle();
         this.description = post.getDescription();
         this.house_type = post.getHouseType();
+        this.img = post.getImg();
         this.city = post.getAddress().getCity();
         this.town = post.getAddress().getTown();
         this.street = post.getAddress().getStreet();
