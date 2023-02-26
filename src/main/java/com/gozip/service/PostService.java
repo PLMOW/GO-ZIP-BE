@@ -39,7 +39,7 @@ public class PostService {
     }
 
     // 선택 게시글 조회
-    public PostRequestDto getPost(MemberDetailsImpl memberDetails, Long id) {
+    public PostRequestDto getPost(Long id) {
         // id로 post조회하기
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new InvalidDataException("게시글이 존재하지 않습니다.")

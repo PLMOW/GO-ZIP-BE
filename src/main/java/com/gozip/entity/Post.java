@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +29,9 @@ public class Post {
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "post")
+    private List<Picture> Pictures = new ArrayList<>();
 
     public Post(PostRequestDto postRequestDto, Member member, Address address) {
         title = postRequestDto.getTitle();

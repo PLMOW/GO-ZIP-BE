@@ -24,7 +24,7 @@ public class PostController {
 
     // 게시글 선택 조회
     @GetMapping("/product/{id}")
-    public PostRequestDto getPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails, @PathVariable Long id) {
-        return postService.getPost(memberDetails, id);
+    public PostRequestDto getPost(@PathVariable Long id) {
+        return postService.getPost(id);
     }
 }
