@@ -12,14 +12,14 @@ import java.util.List;
 public class Picture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "picture_id")
     private long id;
 
-    @Column(length = 1000)
+    @Column(length = 1000, nullable = true)
     private String pictureUrl;
 
-    @Column(length = 1000)
+    @Column(length = 1000, nullable = true)
     private String pictureKey;
 
     @ManyToOne(fetch = FetchType.LAZY)

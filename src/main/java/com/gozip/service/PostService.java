@@ -102,7 +102,8 @@ public class PostService {
 
 
         //사진 수정(사진은 전체 삭제 후 다시 업로드)
-        List<Picture> deletedPictures = pictureRepository.deleteAllByPost_Id(member.getMemberId());
+//        List<Picture> deletedPictures = pictureRepository.deleteAllByPost_Id(member.getMemberId());
+        List<Picture> deletedPictures = pictureRepository.findAllByPost_Id(postId);
 
         // S3에 업로드된 사진 삭제하기
         for (Picture deletedPicture : deletedPictures) {
@@ -115,6 +116,8 @@ public class PostService {
             }
 
         }
+
+        pictureRepository.deleteAllByPost_Id(postId);
 
 //         S3에 다시 업로드
         for (MultipartFile picture : pictures) {

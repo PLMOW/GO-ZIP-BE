@@ -11,4 +11,6 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
 
     List<Picture> deleteAllByPost_Id(Long id);
 
+    List<Picture> findAllByPost_Id(Long id);
+
 }

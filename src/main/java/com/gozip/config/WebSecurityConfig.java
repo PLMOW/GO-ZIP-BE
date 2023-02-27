@@ -82,6 +82,7 @@ public class WebSecurityConfig {
         configuration.addAllowedOrigin("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("*");
 //        configuration.setAllowCredentials(true);
         configuration.setMaxAge(300L);
 
