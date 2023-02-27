@@ -32,4 +32,22 @@ public class PostController {
     public PostRequestDto getPost(@PathVariable Long id) {
         return postService.getPost(id);
     }
+
+    // 게시글 수정
+    @PutMapping("/product/{id}")
+    public ResponseEntity<PostResponseDto> updatePost(@AuthenticationPrincipal MemberDetailsImpl memberDetails,
+                                     @PathVariable Long id,
+                                     @RequestPart(value = "data") PostRequestDto postDto,
+                                     @RequestPart(value = "image") List<MultipartFile> pictures){
+        return postService.updatePost(memberDetails, id, postDto, pictures);
+    }
+
+    // 게시글 삭제
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<PostResponseDto> deletePost(@PathVariable Long id, @AuthenticationPrincipal MemberDetailsImpl memberDetails){
+        return postService.deletePost(memberDetails, id);
+    }
+
+
+
 }

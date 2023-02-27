@@ -39,4 +39,11 @@ public class Post {
         this.member = member;
         this.address = address;
     }
+
+    public void update(PostRequestDto postRequestDto, Address address){
+        title = postRequestDto.getTitle();
+        description = postRequestDto.getDescription();
+        houseType = postRequestDto.getHouse_type();
+        this.address = address;
+    }
 }
