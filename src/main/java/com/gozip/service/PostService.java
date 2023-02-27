@@ -61,10 +61,12 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new InvalidDataException("게시글이 존재하지 않습니다.")
         );
-        // image 조회하기
-        List<Picture> pictures = pictureRepository.findPicturesByPostId(post.getId());
         // dto로 반환
-        return new PostRequestDto(post, pictures);
+        return new PostRequestDto(post);
+    }
+
+    public List<PostRequestDto> getAllPosts(String city, String town, String street) {
+        return postRepository.searchAllPosts(city, town, street);
     }
 
     // 게시글 수정 시 이미지는 <선택 게시글 조회>에서 이미 주었기 때문에 해당 사진을 다시 업로드하는 걸로

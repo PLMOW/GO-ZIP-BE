@@ -21,13 +21,14 @@ public class PostRequestDto {
     private String street;
     private List<String> images = new ArrayList<>();
 
-    public PostRequestDto(Post post, List<Picture> pictures) {
+    public PostRequestDto(Post post) {
         this.title = post.getTitle();
         this.description = post.getDescription();
         this.house_type = post.getHouseType();
         this.city = post.getAddress().getCity();
         this.town = post.getAddress().getTown();
         this.street = post.getAddress().getStreet();
+        List<Picture> pictures = post.getPictures();
         for (Picture picture : pictures) {
             images.add(picture.getPictureUrl());
         }

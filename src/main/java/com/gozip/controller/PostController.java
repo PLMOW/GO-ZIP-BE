@@ -22,7 +22,7 @@ public class PostController {
     // 게시글 등록
     @PostMapping("/product")
     public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal MemberDetailsImpl memberDetails,
-                                                      @RequestPart (value = "data") PostRequestDto postDto,
+                                                      @RequestPart(value = "data") PostRequestDto postDto,
                                                       @RequestPart(value = "image") List<MultipartFile> pictures) {
         return postService.createPost(memberDetails, postDto, pictures);
     }
@@ -31,6 +31,16 @@ public class PostController {
     @GetMapping("/product/{id}")
     public PostRequestDto getPost(@PathVariable Long id) {
         return postService.getPost(id);
+    }
+
+    // 상세페이지 전체 조회
+    @GetMapping("/product/search")
+    public List<PostRequestDto> getAllPosts(
+            @RequestParam(value = "city", defaultValue = "") String city,
+            @RequestParam(value = "town", defaultValue = "") String town,
+            @RequestParam(value = "street", defaultValue = "") String street
+            ) {
+        return postService.getAllPosts(city, town, street);
     }
 
     // 게시글 수정
