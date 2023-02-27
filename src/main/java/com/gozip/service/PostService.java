@@ -1,5 +1,9 @@
 package com.gozip.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.gozip.config.aws.S3Uploader;
 import com.gozip.dto.PostRequestDto;
 import com.gozip.dto.PostResponseDto;
@@ -13,6 +17,7 @@ import com.gozip.repository.PictureRepository;
 import com.gozip.repository.PostRepository;
 import com.gozip.security.MemberDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
@@ -30,6 +35,14 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final PictureRepository pictureRepository;
     private final S3Uploader s3Uploader;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
+
+
 
     // 게시글 등록
     @Transactional
@@ -91,6 +104,9 @@ public class PostService {
         //사진 수정(사진은 전체 삭제 후 다시 업로드)
         pictureRepository.deleteAllByPost_Id(member.getMemberId());
 
+        // S3에 업로드된 사진 삭제하기
+
+        // S3에 다시 업로드
         for (MultipartFile picture : pictures) {
             if (!picture.isEmpty()) {
                 String storedFileName = s3Uploader.upload(picture, "image");
@@ -102,11 +118,25 @@ public class PostService {
 
     }
 
+    @Transactional
     public ResponseEntity<PostResponseDto> deletePost(MemberDetailsImpl memberDetails, Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new InvalidDataException("존재하지 않는 게시글 입니다.")
         );
-        //-----
+        // 이미지 URL 불러오기
+        List<Picture> deletedPictures = pictureRepository.findPicturesByPostId(post.getId());
+        // S3 이미지 삭제
+        for (Picture deletedPicture : deletedPictures) {
+            String key = deletedPicture.getPictureUrl().substring(48);
+            final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
+            try{
+                s3.deleteObject(bucket, key);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        //포스트 삭제
         postRepository.deleteById(postId);
 
         return ResponseEntity.ok(new PostResponseDto("ok", postId));

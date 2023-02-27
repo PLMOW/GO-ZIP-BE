@@ -29,7 +29,7 @@ public class Post {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Picture> Pictures = new ArrayList<>();
 
     public Post(PostRequestDto postRequestDto, Member member, Address address) {
