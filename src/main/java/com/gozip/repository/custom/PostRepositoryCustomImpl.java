@@ -20,13 +20,14 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
     }
 
     @Override
-    public List<PostRequestDto> searchAllPosts(String city, String town, String street) {
+    public List<PostRequestDto> searchAllPosts(String city, String town, String street, String houseType) {
         List<Post> posts = queryFactory
                 .selectFrom(post)
                 .where(
                         cityEq(city),
                         townEq(town),
-                        streetEq(street)
+                        streetEq(street),
+                        houseTypeEq(houseType)
                 ).fetch();
         List<PostRequestDto> results = new ArrayList<>();
         for (Post post : posts) {
@@ -34,6 +35,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
         }
         return results;
     }
+
 
     private Predicate cityEq(String city) {
         return city.length() == 0 ? null : post.address.city.eq(city);
@@ -46,6 +48,10 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
     private Predicate streetEq(String street) {
         return street.length() == 0 ? null : post.address.street.eq(street);
     }
+
+    private Predicate houseTypeEq(String houseType) {
+        return houseType.length() == 0 ? null : post.houseType.eq(houseType);
+    }
 }
 
 /**
@@ -53,5 +59,4 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
  *  picture랑 일대다 관계 => 페치조인시 페이징 불가 => 배치를 이용해서 가져오기
  *  selectFrom post
  *  where city, town, street
- *
  */

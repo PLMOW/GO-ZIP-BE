@@ -78,8 +78,8 @@ public class PostService {
         return new PostRequestDto(post);
     }
 
-    public List<PostRequestDto> getAllPosts(String city, String town, String street) {
-        return postRepository.searchAllPosts(city, town, street);
+    public List<PostRequestDto> getAllPosts(String city, String town, String street, String houseType) {
+        return postRepository.searchAllPosts(city, town, street, houseType);
     }
 
     // 게시글 수정 시 이미지는 <선택 게시글 조회>에서 이미 주었기 때문에 해당 사진을 다시 업로드하는 걸로

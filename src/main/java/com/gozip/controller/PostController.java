@@ -38,9 +38,10 @@ public class PostController {
     public List<PostRequestDto> getAllPosts(
             @RequestParam(value = "city", defaultValue = "") String city,
             @RequestParam(value = "town", defaultValue = "") String town,
-            @RequestParam(value = "street", defaultValue = "") String street
+            @RequestParam(value = "street", defaultValue = "") String street,
+            @RequestParam(value = "house_type", defaultValue = "") String houseType
             ) {
-        return postService.getAllPosts(city, town, street);
+        return postService.getAllPosts(city, town, street, houseType);
     }
 
     // 게시글 수정
