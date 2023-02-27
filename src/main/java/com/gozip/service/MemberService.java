@@ -61,6 +61,7 @@ public class MemberService {
 
         String email = signupRequestDto.getEmail();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
+        String nickname = signupRequestDto.getNickname();
 
 
         // 회원 중복 여부 확인
@@ -78,7 +79,8 @@ public class MemberService {
             role = MemberRoleEnum.ADMIN;
         }
 
-        Member member = new Member(email, password, role);
+
+        Member member = new Member(email, password, nickname, role);
         memberRepository.save(member);
 
         return new StateDto("OK");

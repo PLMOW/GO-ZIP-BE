@@ -19,15 +19,18 @@ public class Member {
     private String email;
     private String password;
 
+    private String nickname;
+
     @Enumerated(value = EnumType.STRING)
     private MemberRoleEnum role;
 
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
-    public Member(String email, String password, MemberRoleEnum role) {
+    public Member(String email, String password, String nickname, MemberRoleEnum role) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
         this.role = role;
     }
 }
