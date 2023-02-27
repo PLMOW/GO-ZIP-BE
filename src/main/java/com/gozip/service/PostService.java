@@ -59,7 +59,7 @@ public class PostService {
         // 사진 저장
         for (MultipartFile picture : pictures) {
             if (!picture.isEmpty()) {
-                String storedFileName = s3Uploader.upload(picture, "image");
+                List<String> storedFileName = s3Uploader.upload(picture, "image");
                 pictureRepository.save(new Picture(storedFileName, post));
             }
         }
@@ -102,14 +102,24 @@ public class PostService {
 
 
         //사진 수정(사진은 전체 삭제 후 다시 업로드)
-        pictureRepository.deleteAllByPost_Id(member.getMemberId());
+        List<Picture> deletedPictures = pictureRepository.deleteAllByPost_Id(member.getMemberId());
 
         // S3에 업로드된 사진 삭제하기
+        for (Picture deletedPicture : deletedPictures) {
+            String key = deletedPicture.getPictureKey();
+            final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
+            try{
+                s3.deleteObject(bucket, key);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
 
-        // S3에 다시 업로드
+        }
+
+//         S3에 다시 업로드
         for (MultipartFile picture : pictures) {
             if (!picture.isEmpty()) {
-                String storedFileName = s3Uploader.upload(picture, "image");
+                List<String> storedFileName = s3Uploader.upload(picture, "image");
                 pictureRepository.save(new Picture(storedFileName, post));
             }
         }
@@ -127,7 +137,7 @@ public class PostService {
         List<Picture> deletedPictures = pictureRepository.findPicturesByPostId(post.getId());
         // S3 이미지 삭제
         for (Picture deletedPicture : deletedPictures) {
-            String key = deletedPicture.getPictureUrl().substring(48);
+            String key = deletedPicture.getPictureKey();
             final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
             try{
                 s3.deleteObject(bucket, key);

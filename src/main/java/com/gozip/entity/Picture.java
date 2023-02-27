@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,12 +19,16 @@ public class Picture {
     @Column(length = 1000)
     private String pictureUrl;
 
+    @Column(length = 1000)
+    private String pictureKey;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Picture(String pictureUrl, Post post) {
-        this.pictureUrl = pictureUrl;
+    public Picture(List<String>list, Post post) {
+        this.pictureKey = list.get(0);
+        this.pictureUrl = list.get(1);
         this.post = post;
     }
 }

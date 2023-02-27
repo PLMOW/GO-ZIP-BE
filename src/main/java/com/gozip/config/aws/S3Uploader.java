@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 // 파일을 받아서 서버에 업로드 하는 코드
@@ -28,7 +29,7 @@ public class S3Uploader {
     private String bucket;
 
     // MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
-    public String upload(MultipartFile multipartFile, String dirName) {
+    public ArrayList<String> upload(MultipartFile multipartFile, String dirName) {
         // multipartFile : 이미지, dirName : image
         try {
             // 1. mulipartFile을 File로 변환
@@ -56,7 +57,7 @@ public class S3Uploader {
     }
 
     // 2. uploadFile : File로 변환된 multipartFile, dirName : "image"
-    private String upload(File uploadFile, String dirName) {
+    private ArrayList<String> upload(File uploadFile, String dirName) {
         // 2-1. fileName(S3 URI)
         String fileName = dirName + "/" + uploadFile.getName();
         log.info("key : " + fileName);
@@ -68,7 +69,10 @@ public class S3Uploader {
         removeNewFile(uploadFile);
 
         // 5. 업로드된 파일의 S3 URL 주소 반환
-        return uploadImageUrl;
+        ArrayList<String> results = new ArrayList<>();
+        results.add(fileName);
+        results.add(uploadImageUrl);
+        return results;
     }
 
     // 3-1. uploadFile : File로 변환된 multipartFile, FileName : key
