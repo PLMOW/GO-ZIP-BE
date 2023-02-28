@@ -1,9 +1,7 @@
 package com.gozip.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.gozip.config.aws.S3Uploader;
 import com.gozip.dto.PostRequestDto;
 import com.gozip.dto.PostResponseDto;
@@ -11,7 +9,8 @@ import com.gozip.entity.Address;
 import com.gozip.entity.Member;
 import com.gozip.entity.Picture;
 import com.gozip.entity.Post;
-import com.gozip.exception.customException.InvalidDataException;
+import com.gozip.exception.CustomException;
+import com.gozip.exception.ErrorCode;
 import com.gozip.repository.MemberRepository;
 import com.gozip.repository.PictureRepository;
 import com.gozip.repository.PostRepository;
@@ -19,7 +18,6 @@ import com.gozip.security.MemberDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,7 +47,7 @@ public class PostService {
     public ResponseEntity<PostResponseDto> createPost(MemberDetailsImpl memberDetails, PostRequestDto postDto, List<MultipartFile> pictures) {
         // 사용자 찾아오기
         Member member = memberRepository.findMemberByEmail(memberDetails.getMember().getEmail()).orElseThrow(
-                () -> new InvalidDataException("존재하지 않는 아이디 입니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
         // 주소 저장
         Address address = new Address(postDto.getCity(), postDto.getTown(), postDto.getStreet());
@@ -72,7 +70,7 @@ public class PostService {
     public PostRequestDto getPost(Long id) {
         // id로 post조회하기
         Post post = postRepository.findById(id).orElseThrow(
-                () -> new InvalidDataException("게시글이 존재하지 않습니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
         // dto로 반환
         return new PostRequestDto(post);
@@ -88,11 +86,11 @@ public class PostService {
     public  ResponseEntity<PostResponseDto> updatePost(MemberDetailsImpl memberDetails, Long postId, PostRequestDto postDto, List<MultipartFile> pictures){
 
         Member member = memberRepository.findMemberByEmail(memberDetails.getMember().getEmail()).orElseThrow(
-                () -> new InvalidDataException("존재하지 않는 아이디 입니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
 
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new InvalidDataException("존재하지 않는 게시글 입니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
 
         Address address = new Address(postDto.getCity(), postDto.getTown(), postDto.getStreet());
@@ -102,7 +100,6 @@ public class PostService {
 
 
         //사진 수정(사진은 전체 삭제 후 다시 업로드)
-//        List<Picture> deletedPictures = pictureRepository.deleteAllByPost_Id(member.getMemberId());
         List<Picture> deletedPictures = pictureRepository.findAllByPost_Id(postId);
 
         // S3에 업로드된 사진 삭제하기
@@ -134,7 +131,7 @@ public class PostService {
     @Transactional
     public ResponseEntity<PostResponseDto> deletePost(MemberDetailsImpl memberDetails, Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new InvalidDataException("존재하지 않는 게시글 입니다.")
+                () -> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
         // 이미지 URL 불러오기
         List<Picture> deletedPictures = pictureRepository.findPicturesByPostId(post.getId());

@@ -3,7 +3,8 @@ package com.gozip.service;
 import com.gozip.dto.*;
 import com.gozip.entity.Member;
 import com.gozip.entity.MemberRoleEnum;
-import com.gozip.exception.customException.InvalidDataException;
+import com.gozip.exception.CustomException;
+import com.gozip.exception.ErrorCode;
 import com.gozip.repository.MemberRepository;
 import com.gozip.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,15 +37,15 @@ public class MemberService {
         String password = request.getPassword();
         // 아이디 & 비밀번호 유효성 검사
         if(!StringUtils.hasText(email) || !StringUtils.hasText(password)){
-            throw new InvalidDataException("입력값이 유효하지 않습니다.");
+            throw new CustomException(ErrorCode.NOT_CONGITION_INSERT);
         }
         // 회원 찾기
         Member member = memberRepository.findMemberByEmail(email).orElseThrow(
-                () -> new InvalidDataException("아이디가 존재하지 않습니다.")
+                () -> new CustomException(ErrorCode.NOT_MATCH_EMAIL)
         );
         // 비밀번호 일치여부
         if (!passwordEncoder.matches(password, member.getPassword())) {
-            throw new InvalidDataException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.NOT_MATCH_PASSWORD);
         }
         // 토큰 발급
         response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
@@ -66,14 +67,14 @@ public class MemberService {
         // 회원 중복 여부 확인
         Optional<Member> findEmail = memberRepository.findMemberByEmail(email);
         if (findEmail.isPresent()) {
-            throw new InvalidDataException("이미 등록된 이메일 입니다.");
+            throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
         }
 
         // 회원, 관리자(중개인) 확인
         MemberRoleEnum role = MemberRoleEnum.MEMBER;
         if(signupRequestDto.isAdmin()) {
             if(!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
-                throw new IllegalArgumentException("관리자 토큰이 틀려 등록이 불가능 합니다.");
+                throw new CustomException(ErrorCode.INVALID_TOKEN);
             }
             role = MemberRoleEnum.ADMIN;
         }

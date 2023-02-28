@@ -26,15 +26,8 @@ public class MemberController {
         return memberService.login(request, response);
     }
 
-//     회원가입 페이지
-//    @GetMapping("/signup")
-//    public ModelAndView signupPage() {
-//        return new ModelAndView("signin");
-//    }
-
     // 회원가입 요청
     @PostMapping("/signup")
-//    @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
     public StateDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         return memberService.signup(signupRequestDto);
     }
