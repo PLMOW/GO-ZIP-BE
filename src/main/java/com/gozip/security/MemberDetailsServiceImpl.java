@@ -1,6 +1,8 @@
 package com.gozip.security;
 
 import com.gozip.entity.Member;
+import com.gozip.exception.CustomException;
+import com.gozip.exception.ErrorCode;
 import com.gozip.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +21,7 @@ public class MemberDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findMemberByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         return new MemberDetailsImpl(member , member.getEmail());
     }
 }

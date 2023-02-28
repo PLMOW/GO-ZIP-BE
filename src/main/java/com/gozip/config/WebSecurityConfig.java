@@ -1,6 +1,7 @@
 package com.gozip.config;
 
 
+import com.gozip.security.ExceptionHandlerFilter;
 import com.gozip.jwt.JwtAuthFilter;
 import com.gozip.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,8 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests().antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
-                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthFilter.class);
 
         return http.build();
     }

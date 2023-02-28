@@ -26,7 +26,7 @@ public enum ErrorCode {
     INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 등록 토큰이 일치하지 않습니다."),
     NOT_FOUND_TOKEN (HttpStatus.NOT_FOUND, "토큰을 찾을 수 없습니다."),
     NOT_INVALID_JWT (HttpStatus.NOT_FOUND, "유효하지 않는 JWT 서명 입니다."),
-    EXPIRED_TOKEN (HttpStatus.NOT_FOUND, "만료된 JWT 토큰 입니다.."),
+    EXPIRED_TOKEN (HttpStatus.NOT_FOUND, "만료된 JWT 토큰 입니다."),
     UNSUPPORTED_TOKEN (HttpStatus.NOT_FOUND, "지원되지 않는 JWT 토큰 입니다."),
     WRONG_TOKEN (HttpStatus.NOT_FOUND, "잘못된 JWT 토큰 입니다.."),
     NO_AUTHORITY(HttpStatus.NOT_FOUND, "토큰을 찾을 수 없습니다.");
