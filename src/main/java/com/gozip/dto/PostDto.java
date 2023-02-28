@@ -2,6 +2,7 @@ package com.gozip.dto;
 
 import com.gozip.entity.Picture;
 import com.gozip.entity.Post;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,16 +13,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostRequestDto {
+public class PostDto {
+
     private String title;
     private String description;
     private String house_type;
     private String city;
     private String town;
     private String street;
-    private List<String> images = new ArrayList<>();
+    List<String> images = new ArrayList<>();
 
-    public PostRequestDto(Post post) {
+    public PostDto(Post post) {
         this.title = post.getTitle();
         this.description = post.getDescription();
         this.house_type = post.getHouseType();
@@ -32,5 +34,13 @@ public class PostRequestDto {
         for (Picture picture : pictures) {
             images.add(picture.getPictureUrl());
         }
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class Res {
+        private String msg;
+        private long id;
     }
 }

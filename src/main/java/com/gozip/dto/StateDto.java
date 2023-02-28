@@ -1,5 +1,6 @@
 package com.gozip.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +11,11 @@ import lombok.Setter;
 public class StateDto {
 
     private String msg;
+    private int status;
 
-    public StateDto(String msg) {
+    @Builder
+    public StateDto(String msg, int status) {
         this.msg = msg;
+        this.status = status;
     }
 }

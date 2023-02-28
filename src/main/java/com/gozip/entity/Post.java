@@ -1,6 +1,6 @@
 package com.gozip.entity;
 
-import com.gozip.dto.PostRequestDto;
+import com.gozip.dto.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +32,7 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Picture> Pictures = new ArrayList<>();
 
-    public Post(PostRequestDto postRequestDto, Member member, Address address) {
+    public Post(PostDto postRequestDto, Member member, Address address) {
         title = postRequestDto.getTitle();
         description = postRequestDto.getDescription();
         houseType = postRequestDto.getHouse_type();
@@ -40,7 +40,7 @@ public class Post {
         this.address = address;
     }
 
-    public void update(PostRequestDto postRequestDto, Address address){
+    public void update(PostDto postRequestDto, Address address){
         title = postRequestDto.getTitle();
         description = postRequestDto.getDescription();
         houseType = postRequestDto.getHouse_type();

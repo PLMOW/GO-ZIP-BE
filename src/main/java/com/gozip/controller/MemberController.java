@@ -20,21 +20,21 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 로그인 구현. 일단 반환타입 Member로
+    // 로그인 구현
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request, HttpServletResponse response) {
+    public ResponseEntity<UserDto.LoginRes> login(@RequestBody UserDto.LoginReq request, HttpServletResponse response) {
         return memberService.login(request, response);
     }
 
     // 회원가입 요청
     @PostMapping("/signup")
-    public StateDto signup(@RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<StateDto> signup(@RequestBody UserDto.SignupReq signupRequestDto) {
         return memberService.signup(signupRequestDto);
     }
 
     @GetMapping("/tryget")
     public StateDto tryget(){
-        StateDto stateDto = new StateDto("200");
+        StateDto stateDto = new StateDto("200",200);
         return stateDto;
     }
 }

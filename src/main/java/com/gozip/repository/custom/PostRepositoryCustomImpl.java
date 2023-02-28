@@ -1,6 +1,6 @@
 package com.gozip.repository.custom;
 
-import com.gozip.dto.PostRequestDto;
+import com.gozip.dto.PostDto;
 import com.gozip.entity.Post;
 import com.gozip.entity.QPost;
 import com.querydsl.core.types.Predicate;
@@ -20,7 +20,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
     }
 
     @Override
-    public List<PostRequestDto> searchAllPosts(String city, String town, String street, String houseType) {
+    public List<PostDto> searchAllPosts(String city, String town, String street, String houseType) {
         List<Post> posts = queryFactory
                 .selectFrom(post)
                 .where(
@@ -29,9 +29,9 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom{
                         streetEq(street),
                         houseTypeEq(houseType)
                 ).fetch();
-        List<PostRequestDto> results = new ArrayList<>();
+        List<PostDto> results = new ArrayList<>();
         for (Post post : posts) {
-            results.add(new PostRequestDto(post));
+            results.add(new PostDto(post));
         }
         return results;
     }
