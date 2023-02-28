@@ -1,6 +1,5 @@
 package com.gozip.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,15 +7,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoginRequestDto {
+public class LoginResponseDto {
 
     private String email;
-    private String password;
     private String nickname;
+    private boolean ok;
 
-    public LoginRequestDto(String email, String password, String nickname) {
+
+    public LoginResponseDto(String email, String nickname, boolean ok) {
         this.email = email;
-        this.password = password;
         this.nickname = nickname;
+        this.ok = ok;
     }
 }

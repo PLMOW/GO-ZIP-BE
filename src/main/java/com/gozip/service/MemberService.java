@@ -1,14 +1,13 @@
 package com.gozip.service;
 
-import com.gozip.dto.SignupRequestDto;
+import com.gozip.dto.*;
 import com.gozip.entity.Member;
 import com.gozip.entity.MemberRoleEnum;
 import com.gozip.exception.customException.InvalidDataException;
 import com.gozip.repository.MemberRepository;
-import com.gozip.dto.LoginRequestDto;
-import com.gozip.dto.StateDto;
 import com.gozip.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,7 @@ public class MemberService {
 
     // 로그인 구현
     @Transactional(readOnly = true)
-    public StateDto login(LoginRequestDto request, HttpServletResponse response) {
+    public ResponseEntity<LoginResponseDto> login(LoginRequestDto request, HttpServletResponse response) {
         // 유저 이메일, 비밀번호 가져오기
         String email = request.getEmail();
         String password = request.getPassword();
@@ -50,7 +49,7 @@ public class MemberService {
         // 토큰 발급
         response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
         // 상태 반환
-        return new StateDto("OK");
+        return ResponseEntity.ok(new LoginResponseDto(email,request.getNickname(),true));
     }
 
 

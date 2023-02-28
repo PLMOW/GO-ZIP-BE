@@ -1,11 +1,10 @@
 package com.gozip.controller;
 
-import com.gozip.dto.SignupRequestDto;
+import com.gozip.dto.*;
 import com.gozip.entity.Member;
-import com.gozip.dto.LoginRequestDto;
-import com.gozip.dto.StateDto;
 import com.gozip.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +22,7 @@ public class MemberController {
 
     // 로그인 구현. 일단 반환타입 Member로
     @PostMapping("/login")
-    public StateDto login(@RequestBody LoginRequestDto request, HttpServletResponse response) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request, HttpServletResponse response) {
         return memberService.login(request, response);
     }
 
