@@ -1,26 +1,24 @@
 package com.gozip.webchat.webcontroller;
 
-import com.gozip.webchat.webmodel.ChatRoom;
-import com.gozip.webchat.webservice.ChatService;
+import com.gozip.webchat.webmodel.ChatMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/chat")
 public class ChatController {
 
-    private final ChatService chatService;
+    private final SimpMessageSendingOperations messagingTemplate;
 
-    @PostMapping
-    public ChatRoom chatRoom(@RequestParam String post_Id, @RequestParam String user_nickname){
-        return chatService.createRoom(post_Id, user_nickname);
-    }
-
-    @GetMapping
-    public List<ChatRoom> findAllRoom(){
-        return chatService.findAllRoom();
+    @MessageMapping("/chat/message")
+    public void message(ChatMessage message){
+        if (ChatMessage.MessageType.ENTER.equals(message.getType())){
+            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+        }
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 }

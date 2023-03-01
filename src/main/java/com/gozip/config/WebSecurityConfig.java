@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -19,6 +21,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.socket.sockjs.SockJsService;
+import org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler;
+import org.springframework.web.socket.sockjs.transport.handler.DefaultSockJsService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -53,6 +62,8 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests().antMatchers("/api/**").permitAll()
                 .antMatchers("/ws/**").permitAll()
                 .antMatchers("/chat/**").permitAll()
+                .antMatchers("/stomp").permitAll()
+                .antMatchers("/stomp/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
@@ -64,10 +75,11 @@ public class WebSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("*");
+        configuration.setAllowCredentials(true);
         configuration.setMaxAge(300L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -75,6 +87,31 @@ public class WebSecurityConfig {
         return source;
     }
 
+
+    @Bean
+
+    public SimpleUrlHandlerMapping handlerMapping() {
+
+        Map<String, Object> urlMap = new HashMap<String, Object>();
+        SockJsService sockJsService = new DefaultSockJsService(taskScheduler());
+        urlMap.put("/sockjs/echo/**", new SockJsHttpRequestHandler(
+                sockJsService, new EchoHandler()));
+        SimpleUrlHandlerMapping hm = new SimpleUrlHandlerMapping();
+        hm.setUrlMap(urlMap);
+        return hm;
+    }
+
+
+    @Bean
+    public TaskScheduler taskScheduler() {
+
+        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+
+        taskScheduler.setThreadNamePrefix("SockJS-");
+
+        return taskScheduler;
+
+    }
 
 
 
