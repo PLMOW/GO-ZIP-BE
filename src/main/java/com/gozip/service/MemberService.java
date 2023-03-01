@@ -55,7 +55,7 @@ public class MemberService {
                 MemberDto.LoginRes.builder()
                         .member_id(member.getMemberId())
                         .email(email)
-                        .nickname(request.getNickname())
+                        .nickname(member.getNickname())
                         .ok(true)
                         .build()
                 );

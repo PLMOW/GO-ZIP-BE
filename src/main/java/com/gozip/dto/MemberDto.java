@@ -11,7 +11,6 @@ public class MemberDto {
     public static class LoginReq {
         private String email;
         private String password;
-        private String nickname;
     }
 
     @Getter
