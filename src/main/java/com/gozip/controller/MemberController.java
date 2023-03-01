@@ -1,13 +1,10 @@
 package com.gozip.controller;
 
 import com.gozip.dto.*;
-import com.gozip.entity.Member;
 import com.gozip.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,13 +19,13 @@ public class MemberController {
 
     // 로그인 구현
     @PostMapping("/login")
-    public ResponseEntity<UserDto.LoginRes> login(@RequestBody UserDto.LoginReq request, HttpServletResponse response) {
+    public ResponseEntity<MemberDto.LoginRes> login(@RequestBody MemberDto.LoginReq request, HttpServletResponse response) {
         return memberService.login(request, response);
     }
 
     // 회원가입 요청
     @PostMapping("/signup")
-    public ResponseEntity<StateDto> signup(@RequestBody UserDto.SignupReq signupRequestDto) {
+    public ResponseEntity<StateDto> signup(@RequestBody MemberDto.SignupReq signupRequestDto) {
         return memberService.signup(signupRequestDto);
     }
 

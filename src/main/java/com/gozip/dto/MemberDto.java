@@ -1,11 +1,10 @@
 package com.gozip.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UserDto {
+public class MemberDto {
 
     @Getter
     @Setter
@@ -18,6 +17,7 @@ public class UserDto {
     @Getter
     @Builder
     public static class LoginRes {
+        private Long member_id;
         private String email;
         private String nickname;
         private boolean ok;

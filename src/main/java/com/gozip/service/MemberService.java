@@ -32,7 +32,7 @@ public class MemberService {
 
     // 로그인 구현
     @Transactional(readOnly = true)
-    public ResponseEntity<UserDto.LoginRes> login(UserDto.LoginReq request, HttpServletResponse response) {
+    public ResponseEntity<MemberDto.LoginRes> login(MemberDto.LoginReq request, HttpServletResponse response) {
         // 유저 이메일, 비밀번호 가져오기
         String email = request.getEmail();
         String password = request.getPassword();
@@ -52,7 +52,8 @@ public class MemberService {
         response.addHeader(jwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(member.getEmail(), member.getRole()));
         // 상태 반환
         return ResponseEntity.ok(
-                UserDto.LoginRes.builder()
+                MemberDto.LoginRes.builder()
+                        .member_id(member.getMemberId())
                         .email(email)
                         .nickname(request.getNickname())
                         .ok(true)
@@ -64,7 +65,7 @@ public class MemberService {
 
     // 회원가입 구현
     @Transactional
-    public ResponseEntity<StateDto> signup(UserDto.SignupReq signupRequestDto) {
+    public ResponseEntity<StateDto> signup(MemberDto.SignupReq signupRequestDto) {
 
         String email = signupRequestDto.getEmail();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());

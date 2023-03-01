@@ -64,7 +64,7 @@ public class PostService {
         return ResponseEntity.ok(
                 PostDto.Res.builder()
                         .msg("ok")
-                        .id(post.getId())
+                        .post_id(post.getId())
                         .build()
         );
     }
@@ -96,6 +96,11 @@ public class PostService {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
+
+        // 포스트 작성자와 토큰 멤버 일치 확인
+        if(post.getMember().getMemberId() != memberDetails.getMember().getMemberId()) {
+            throw new CustomException(ErrorCode.AUTHORIZATION);
+        }
 
         Address address = new Address(postDto.getCity(), postDto.getTown(), postDto.getStreet());
 
@@ -134,11 +139,18 @@ public class PostService {
 
     }
 
+    // 게시글 삭제
     @Transactional
     public ResponseEntity<PostDto.Res> deletePost(MemberDetailsImpl memberDetails, Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_POST)
         );
+
+        // 포스트 작성자와 토큰 멤버 일치 확인
+        if(post.getMember().getMemberId() != memberDetails.getMember().getMemberId()) {
+            throw new CustomException(ErrorCode.AUTHORIZATION);
+        }
+
         // 이미지 URL 불러오기
         List<Picture> deletedPictures = pictureRepository.findPicturesByPostId(post.getId());
         // S3 이미지 삭제
@@ -157,7 +169,7 @@ public class PostService {
 
         return ResponseEntity.ok(
                 PostDto.Res.builder()
-                        .id(postId)
+                        .post_id(postId)
                         .msg("ok")
                         .build()
         );
