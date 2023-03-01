@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PostDto {
 
+    private Long id;
     private String title;
     private String description;
     private String house_type;
@@ -24,6 +25,7 @@ public class PostDto {
     List<String> images = new ArrayList<>();
 
     public PostDto(Post post) {
+        this.id = post.getId();
         this.title = post.getTitle();
         this.description = post.getDescription();
         this.house_type = post.getHouseType();

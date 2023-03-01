@@ -32,7 +32,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     private void customExceptionHandler(HttpServletResponse response, ErrorCode errorCode) {
         log.info(errorCode.getMsg());
         response.setStatus(errorCode.getHttpStatus().value());
-        response.setContentType("application/json; charset=UTF=8");
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         try {
             String json = new ObjectMapper().writeValueAsString(new StateDto(errorCode.getMsg(), errorCode.getHttpStatus().value()));
