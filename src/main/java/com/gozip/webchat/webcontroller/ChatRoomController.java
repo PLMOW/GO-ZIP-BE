@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/chat")
 public class ChatRoomController {
 
@@ -21,16 +21,17 @@ public class ChatRoomController {
 //        return "/room";
 //    }
 
-    @GetMapping("/rooms")
-    @ResponseBody
-    public List<ChatRoom> room(){
-        return chatRoomRepository.findAllRoom();
-    }
+//    @GetMapping("/rooms")
+//    @ResponseBody
+//    public List<ChatRoom> room(){
+//        return chatRoomRepository.findAllRoom();
+//    }
 
-    @PostMapping("/room")
+    @PostMapping("/room/{post_Id}")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String post_Id, @RequestParam String user_nickname){
-        return chatRoomRepository.createChatRoom(post_Id, user_nickname);
+    public ChatRoom createRoom(@PathVariable String post_Id){
+        log.info("POST. /room/{post_Id}, post_id = {}",post_Id);
+        return chatRoomRepository.createChatRoom(post_Id);
     }
 
     @GetMapping("/room/enter/{roomId}")

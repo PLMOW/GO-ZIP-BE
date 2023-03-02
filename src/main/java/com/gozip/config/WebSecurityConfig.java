@@ -64,6 +64,7 @@ public class WebSecurityConfig {
                 .antMatchers("/chat/**").permitAll()
                 .antMatchers("/stomp").permitAll()
                 .antMatchers("/stomp/**").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)

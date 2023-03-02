@@ -8,12 +8,10 @@ import lombok.Getter;
 public class ChatRoom {
 
     private String roomId;
-    private String name;
 
-    public static ChatRoom create(String roomId, String name){
+    public static ChatRoom create(String roomId){
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.roomId = roomId;
-        chatRoom.name = name;
         return chatRoom;
     }
 }
