@@ -4,12 +4,12 @@
 ## 프로젝트 소개  
 고승유 매니저님의 내집마련을 위한 집 매물 소개 사이트  
 
-## 🗿  팀원 
+## 팀원 
 |이름|이현빈|조성재|한승현|김병무|김대현|  
 |--|--|--|--|--|--|
 |역할|팀장/BE|BE|BE|팀장/BE|BE|  
 
-## 🖥️  스택  
+## 스택  
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">  <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white">  <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white">  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">  
 
 <img src="https://img.shields.io/badge/AmazonRDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white">  <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">  <img src="https://img.shields.io/badge/AmazonS3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white">   
@@ -36,7 +36,7 @@
 </details>
 
 ## 📃  API 명세서  
-[[]](https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4)
+[https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4](https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4)
 
 ## 📍  트러블 슈팅    
 <details>
