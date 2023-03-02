@@ -30,7 +30,7 @@
 <summary>ERD 확인하기</summary>
 <div markdown="1">
 
-<img width="720" alt="Pasted image 20230302162030" src="https://user-images.githubusercontent.com/118401337/222367893-2dc3d1f9-bc2c-42f7-b359-352a6a7a8e4b.png">
+<img width="584" alt="image" src="https://user-images.githubusercontent.com/118401337/222376315-fabfdd42-6801-4321-bae9-eebadd345d0f.png">
 
 </div>
 </details>
