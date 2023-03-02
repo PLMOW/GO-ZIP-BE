@@ -1,22 +1,22 @@
-# 🏘️ GOZIP  
+# 🏘️  GOZIP  
 <img width="1502" alt="Pasted image 20230302163342" src="https://user-images.githubusercontent.com/118401337/222367962-8f5f0a43-242b-4db8-b55d-1aedc6d75f01.png">
 
-## ✏️ 프로젝트 소개  
+## ✏️  프로젝트 소개  
 고승유 매니저님의 내집마련을 위한 집 매물 소개 사이트  
 
-## 🗿 팀원 
+## 🗿  팀원 
 |이름|이현빈|조성재|한승현|김병무|김대현|  
 |--|--|--|--|--|--|
 |역할|팀장/BE|BE|BE|팀장/BE|BE|  
 
-## 🖥️ 스택  
+## 🖥️  스택  
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">  <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white">  <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white">  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">  
 
 <img src="https://img.shields.io/badge/AmazonRDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white">  <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">  <img src="https://img.shields.io/badge/AmazonS3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white">   
 
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">  
 
-## 📌 구현기능 
+## 📌  구현기능 
 - 스프링 시큐리티를 이용한 JWT 로그인  
 - 게시글 CRUD  
 - S3를 이용한 이미지 저장기능  
@@ -25,7 +25,7 @@
   - GlobalExceptionHandler로 controller의 예외를 전역적으로 처리  
   - ExceptionHandlerFilter를 추가하여 시큐리티에서 JWT검증간의 예외를 일괄적으로 처리  
 
-## 🖼️ ERD  
+## 🖼️  ERD  
 <details>
 <summary>ERD 확인하기</summary>
 <div markdown="1">
@@ -35,7 +35,7 @@
 </div>
 </details>
 
-## 📃 API 명세서  
+## 📃  API 명세서  
 <details>
 <summary>API 명세서 확인하기</summary>
 <div markdown="1">
@@ -45,7 +45,7 @@
 </div>
 </details>
 
-## 🎉 트러블 슈팅    
+## 🎉  트러블 슈팅    
 <details>
 <summary>무한 리다이렉트</summary>
 <div markdown="1">
