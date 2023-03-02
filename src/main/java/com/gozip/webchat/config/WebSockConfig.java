@@ -13,6 +13,7 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
+        log.info("configureMessageBroker");
         config.enableSimpleBroker("/sub");
         config.setApplicationDestinationPrefixes("/pub");
     }

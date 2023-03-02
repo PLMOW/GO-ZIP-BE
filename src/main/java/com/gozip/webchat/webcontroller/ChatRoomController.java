@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/chat")
@@ -36,6 +37,7 @@ public class ChatRoomController {
 
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId){
+        log.info("GET. /room/enter/{roomId}, roomId = {}",roomId);
         model.addAttribute("roomId", roomId);
         return "/chat/roomdetail";
     }
@@ -43,6 +45,7 @@ public class ChatRoomController {
     @GetMapping("/room/{roomId}")
     @ResponseBody
     public ChatRoom roomInfo(@PathVariable String roomId){
+        log.info("GET. /room/{roomId}, roomId = {}",roomId);
         return chatRoomRepository.findRoomById(roomId);
     }
 
