@@ -1,7 +1,7 @@
 # 🏘️  GOZIP  
 <img width="1502" alt="Pasted image 20230302163342" src="https://user-images.githubusercontent.com/118401337/222367962-8f5f0a43-242b-4db8-b55d-1aedc6d75f01.png">
 
-## ✏️  프로젝트 소개  
+## 프로젝트 소개  
 고승유 매니저님의 내집마련을 위한 집 매물 소개 사이트  
 
 ## 🗿  팀원 
@@ -36,16 +36,9 @@
 </details>
 
 ## 📃  API 명세서  
-<details>
-<summary>API 명세서 확인하기</summary>
-<div markdown="1">
+[[]](https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4)
 
-  
-
-</div>
-</details>
-
-## 🎉  트러블 슈팅    
+## 📍  트러블 슈팅    
 <details>
 <summary>무한 리다이렉트</summary>
 <div markdown="1">
