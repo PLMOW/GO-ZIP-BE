@@ -27,7 +27,14 @@
 
 ## 🖼️  ERD  
 
+<details>
+<summary>ERD 확인하기</summary>
+<div markdown="1">
+
 <img width="584" alt="image" src="https://user-images.githubusercontent.com/118401337/222376315-fabfdd42-6801-4321-bae9-eebadd345d0f.png">
+
+</div>
+</details>
 
 ## 📃  API 명세서  
 [Notion](https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4)
