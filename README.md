@@ -36,7 +36,7 @@
 </details>
 
 ## 📃  API 명세서  
-[https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4](https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4)
+[Notion](https://www.notion.so/7a1a103555b74c8cbe12e3b12eba30ff?v=fb7bfa51c3d44dc8bb90403e3f4a8b3e&pvs=4)
 
 ## 📍  트러블 슈팅    
 <details>
